@@ -1,0 +1,14 @@
+{
+  "name": "advent-of-code",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blicht19/advent-of-code-js.git"
+  },
+  "type": "module",
+  "workspaces": [
+    "library",
+    "2025",
+    "2025/day-1"
+  ]
+}
