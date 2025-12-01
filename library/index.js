@@ -12,3 +12,7 @@ export const getFileNameArgument = () => {
 export const getFileContentsAsString = (filePath) => {
     return readFileSync(filePath).toString();
 }
+
+export const getFileContentsAsArrayOfStrings = (filePath) => {
+    return getFileContentsAsString(filePath).split('\n');
+}
