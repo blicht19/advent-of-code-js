@@ -16,3 +16,7 @@ export const getFileContentsAsString = (filePath) => {
 export const getFileContentsAsArrayOfStrings = (filePath) => {
     return getFileContentsAsString(filePath).split('\n');
 }
+
+export const getFileContentsAs2DCharacterArray = (filePath) => {
+    return getFileContentsAsArrayOfStrings(filePath).map(string => string.split(''));
+}
