@@ -1,46 +1,49 @@
-import {getFileContentsAs2DCharacterArray, getFileNameArgument} from "library";
+import { getFileContentsAs2DCharacterArray, getFileNameArgument } from "library";
 
 const fileName = getFileNameArgument();
 const input = getFileContentsAs2DCharacterArray(fileName);
 
-const visitedSet = new Set();
+const partOne = input => {
+    const visited = new Array(input[0].length).fill(false);
+    const startingColumn = input[0].indexOf('S');
+    visited[startingColumn] = true;
 
-const visited = (row, column) => {
-    return visitedSet.has(JSON.stringify({row, column}));
-}
-
-const markLocationVisited = (row, column) => {
-    visitedSet.add(JSON.stringify({row, column}));
-}
-
-const splitters = [];
-
-const emitBeam = (grid, row, column) => {
     let sum = 0;
-    for (let currentRow = row; currentRow < grid.length; currentRow++) {
-        if (visited(currentRow, column)) {
-            break;
-        }
-
-        markLocationVisited(currentRow, column);
-
-        if (grid[currentRow][column] === '^') {
-            splitters.push({row: currentRow, column});
-            sum++;
-            if (column > 0 && !visited(currentRow, column - 1)) {
-                sum += emitBeam(grid, currentRow, column - 1);
+    for (let row = 0; row < input.length; row++) {
+        for (let column = 0; column < input[row].length; column++) {
+            if (input[row][column] === '^' && visited[column]) {
+                sum++;
+                visited[column] = false;
+                visited[column - 1] = true;
+                visited[column + 1] = true;
             }
-            if (column < grid[currentRow].length - 1 && !visited(currentRow, column + 1)) {
-                sum += emitBeam(grid, currentRow, column + 1);
-            }
-
-            break;
         }
     }
 
     return sum;
 }
 
-const startingColumn = input[0].indexOf('S');
+const partTwo = input => {
+    const visits = new Array(input[0].length).fill(0);
+    const startingColumn = input[0].indexOf('S');
+    visits[startingColumn] = 1;
+    let sum = 1;
+    for (let row = 0; row < input.length; row++) {
+        for (let column = 0; column < input[row].length; column++) {
+            if (input[row][column] === '^') {
+                const timesVisited = visits[column];
+                sum += timesVisited;
+                visits[column] = 0;
+                visits[column - 1] += timesVisited;
+                visits[column + 1] += timesVisited;
+            }
+        }
+    }
 
-console.log(`Part One: ${emitBeam(input, 1, startingColumn)}`);
+    return sum;
+}
+
+
+
+console.log(`Part One: ${partOne(input)}`);
+console.log(`Part Two: ${partTwo(input)}`)
