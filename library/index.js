@@ -1,4 +1,4 @@
-import {readFileSync} from 'fs';
+import { readFileSync } from 'fs';
 
 export const getFileNameArgument = () => {
     if (process.argv.length < 3) {
@@ -46,4 +46,25 @@ export const getNeighbors = (twoDimensionalArray, row, column, includeDiagonals 
     }
 
     return neighbors;
+}
+
+export const getCombinations = (array, size) => {
+    const result = [];
+
+    const helper = (combination, arrayIndex) => {
+        if (combination.length === size) {
+            result.push(combination);
+            return;
+        }
+
+        if (arrayIndex + 1 > array.length) {
+            return;
+        }
+
+        helper([...combination, array[arrayIndex]], arrayIndex + 1);
+        helper(combination, arrayIndex + 1);
+    }
+
+    helper([], 0);
+    return result;
 }
