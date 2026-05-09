@@ -2,5 +2,8 @@
   "name": "day-10",
   "version": "1.0.0",
   "type": "module",
-  "main": "index.js"
+  "main": "index.js",
+  "dependencies": {
+    "z3-solver": "4.16.0"
+  }
 }
